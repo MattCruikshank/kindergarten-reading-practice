@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Segmenting Words</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    font-family: 'Lexend', sans-serif;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    background: #fdf6e3;
+  }
+  #container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    height: 100%;
+    width: 100%;
+  }
+  .word {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(1.5rem, 5vw, 3.5rem);
+    font-weight: 400;
+    color: #222;
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="container"></div>
+<script>
+const words = [
+  // 3-sound words (CVC)
+  "cat","dog","pig","hen","run","sit","hot","bed","cup","map",
+  "net","box","sun","red","top","big","hat","leg","mud","bug",
+  "fun","hop","pen","rug","van","wet","zip","jam","kit","log",
+  "mop","nut","pod","rip","sob","tub","win","bus","den","fig",
+  "gum","hid","jog","kid","lip","mat","nod","pup","rod","sip",
+  "tag","vet","wax","yes","cot","dug","fin","got","him","jet",
+  "lap","mix","not","pat","ram","sad","ten","wig","fox","dad",
+  "mom","bun","bat","bit","but","cut","dot","dip","fan","fed",
+  "fit","gap","gas","get","gig","gut","gob","hog","hub","hum",
+  "hug","jab","jig","jut","keg","lab","lid","lot","lug","mob",
+  "nap","nib","nag","pan","peg","pig","pin","pit","pop","pot",
+  "pub","pun","put","rag","ran","rat","rev","rib","rim","rob",
+  "rot","rub","rut","sag","sap","set","sin","six","sub","sum",
+  "tab","tan","tap","tin","tip","tog","ton","tot","tug","tux",
+  "vat","wag","web","wed","wig","wit","yam","yap","zap","zen",
+  // 4-sound words (CVCC and CCVC)
+  "skip","rust","slap","mint","snap","clap","drip","flag","frog","grab",
+  "grin","plop","skin","slam","slip","snip","spot","stem","stop","trap",
+  "trip","twig","jump","just","lamp","land","list","lump","melt","must",
+  "nest","next","past","pond","pump","rent","sand","send","silk","soft",
+  "test","tent","went","west","wind","fist","gift","help","hint","limp",
+  "lift","link","milk","mist","bump","camp","cast","clip","crab","crop",
+  "desk","disk","damp","drag","drop","drum","dump","dust","fact","fast",
+  "felt","film","flat","flip","fond","glad","glen","glob","golf","gust",
+  "hand","held","hump","hunt","kept","king","last","left","lent","lest",
+  "lisp","lock","long","lost","mask","mass","mend","mock","molt","monk",
+  "plan","plug","plum","prod","prop","raft","ramp","rang","rank","rest",
+  "ring","risk","romp","rung","rusk","sank","self","sift","sing","sink",
+  "skit","slab","sled","slim","slot","slug","smog","snag","snub","song",
+  "spin","spit","step","stir","stub","stud","stun","sung","sunk","swim",
+  "task","tilt","trim","trot","tusk","vent","vest","volt","weld","welt",
+  "wick","wilt","wimp","wing","wink","wisp","yelp","zest"
+];
+
+function pickRandom(arr, n) {
+  const shuffled = [...arr].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, n);
+}
+
+function showWords() {
+  const container = document.getElementById('container');
+  container.innerHTML = '';
+  const chosen = pickRandom(words, 20);
+  for (const w of chosen) {
+    const div = document.createElement('div');
+    div.className = 'word';
+    div.textContent = w;
+    container.appendChild(div);
+  }
+}
+
+document.body.addEventListener('click', showWords);
+showWords();
+</script>
+</body>
+</html>

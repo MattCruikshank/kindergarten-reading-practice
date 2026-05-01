@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Letter Sounds</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    font-family: 'Lexend', sans-serif;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    background: #fdf6e3;
+  }
+  #container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    height: 100%;
+    width: 100%;
+  }
+  .letter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(2rem, 8vw, 5rem);
+    font-weight: 400;
+    color: #222;
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="container"></div>
+<script>
+const sounds = [
+  "b","n","o","s","c","i","l","g","d","z",
+  "a","e","h","f","v","t","r","k","u","x",
+  "p","j","w","y","qu","m"
+];
+
+function pickRandom(arr, n) {
+  const shuffled = [...arr].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, n);
+}
+
+const PER_PAGE = 20;
+const GOAL = 42;
+let lastTime = null;
+
+function showSounds() {
+  const now = Date.now();
+  if (lastTime) {
+    const elapsed = (now - lastTime) / 60000;
+    const rate = Math.round(PER_PAGE / elapsed);
+    document.title = `${rate}/min (goal: ${GOAL}/min) — Letter Sounds`;
+    console.log(`${PER_PAGE} sounds in ${elapsed.toFixed(1)}min → ${rate}/min (goal: ${GOAL}/min)`);
+  } else {
+    document.title = `Letter Sounds (goal: ${GOAL}/min)`;
+  }
+  lastTime = now;
+  const container = document.getElementById('container');
+  container.innerHTML = '';
+  const chosen = pickRandom(sounds, PER_PAGE);
+  for (const s of chosen) {
+    const div = document.createElement('div');
+    div.className = 'letter';
+    div.textContent = s;
+    container.appendChild(div);
+  }
+}
+
+document.body.addEventListener('click', showSounds);
+showSounds();
+</script>
+</body>
+</html>

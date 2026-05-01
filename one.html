@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nonsense Words</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    font-family: 'Lexend', sans-serif;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    background: #fdf6e3;
+  }
+  #container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding: 2vh 0;
+  }
+  .word {
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 400;
+    color: #222;
+    text-align: center;
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="container"></div>
+<script>
+const words = [
+  "huz","pag","wak","ux","gop",
+  "zub","cag","rin","lup","yaz",
+  "dap","boz","tez","nop","iv",
+  "fom","vup","jav","kad","maz",
+  "es","sef","goz","puv","vis",
+  "lac","wox","tos","dez","gaz",
+  "nuz","paz","dac","jiv","yad",
+  "zek","ket","uk","gax","lut",
+  "nos","jaf","zes","riz","loz",
+  "zad","nud","hes","yoz","hov"
+];
+
+function pickRandom(arr, n) {
+  const shuffled = [...arr].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, n);
+}
+
+const PER_PAGE = 5;
+const GOAL = 12;
+let lastTime = null;
+
+function showWords() {
+  const now = Date.now();
+  if (lastTime) {
+    const elapsed = (now - lastTime) / 60000;
+    const rate = Math.round(PER_PAGE / elapsed);
+    document.title = `${rate}/min (goal: ${GOAL}/min) — Nonsense Words`;
+    console.log(`${PER_PAGE} words in ${elapsed.toFixed(1)}min → ${rate}/min (goal: ${GOAL}/min)`);
+  } else {
+    document.title = `Nonsense Words (goal: ${GOAL}/min)`;
+  }
+  lastTime = now;
+  const container = document.getElementById('container');
+  container.innerHTML = '';
+  const chosen = pickRandom(words, PER_PAGE);
+  for (const w of chosen) {
+    const div = document.createElement('div');
+    div.className = 'word';
+    div.textContent = w;
+    container.appendChild(div);
+  }
+}
+
+document.body.addEventListener('click', showWords);
+showWords();
+</script>
+</body>
+</html>
