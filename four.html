@@ -39,8 +39,7 @@
 <body>
 <div id="container"></div>
 <script>
-const words = [
-  // 3-sound words (CVC)
+const threeSound = [
   "cat","dog","pig","hen","run","sit","hot","bed","cup","map",
   "net","box","sun","red","top","big","hat","leg","mud","bug",
   "fun","hop","pen","rug","van","wet","zip","jam","kit","log",
@@ -55,8 +54,10 @@ const words = [
   "pub","pun","put","rag","ran","rat","rev","rib","rim","rob",
   "rot","rub","rut","sag","sap","set","sin","six","sub","sum",
   "tab","tan","tap","tin","tip","tog","ton","tot","tug","tux",
-  "vat","wag","web","wed","wig","wit","yam","yap","zap","zen",
-  // 4-sound words (CVCC and CCVC)
+  "vat","wag","web","wed","wig","wit","yam","yap","zap","zen"
+];
+
+const fourSound = [
   "skip","rust","slap","mint","snap","clap","drip","flag","frog","grab",
   "grin","plop","skin","slam","slip","snip","spot","stem","stop","trap",
   "trip","twig","jump","just","lamp","land","list","lump","melt","must",
@@ -83,7 +84,8 @@ function pickRandom(arr, n) {
 function showWords() {
   const container = document.getElementById('container');
   container.innerHTML = '';
-  const chosen = pickRandom(words, 20);
+  const chosen = [...pickRandom(threeSound, 15), ...pickRandom(fourSound, 5)]
+    .sort(() => Math.random() - 0.5);
   for (const w of chosen) {
     const div = document.createElement('div');
     div.className = 'word';
