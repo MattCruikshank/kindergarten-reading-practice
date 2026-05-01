@@ -23,6 +23,13 @@
     height: 100%;
     width: 100%;
   }
+  #rate {
+    position: fixed;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    font-size: 0.9rem;
+    color: #999;
+  }
   .word {
     display: flex;
     align-items: center;
@@ -38,6 +45,7 @@
 </head>
 <body>
 <div id="container"></div>
+<div id="rate"></div>
 <script>
 const words = [
   "a","find","like","so","with",
@@ -77,6 +85,7 @@ function showWords() {
     const elapsed = (now - lastTime) / 60000;
     const rate = Math.round(PER_PAGE / elapsed);
     document.title = `${rate}/min (goal: ${GOAL}/min) — High Frequency Words`;
+    document.getElementById('rate').textContent = `${rate}/${GOAL}`;
     console.log(`${PER_PAGE} words in ${elapsed.toFixed(1)}min → ${rate}/min (goal: ${GOAL}/min)`);
   } else {
     document.title = `High Frequency Words (goal: ${GOAL}/min)`;
